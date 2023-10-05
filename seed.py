@@ -31,7 +31,7 @@ def generate_random_recipe_with_ingredients():
     recipe_name = fake.random.choice(recipe)
     instructions = fake.random.choice(instructions)
 
-    num_ingredients = random.randint(5)
+    num_ingredients = random.randint(3)
     ingredients = []
     for _ in range(num_ingredients):
         ingredient_name = fake.random.choice(ingredients)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     
     recipe_book = RecipeBook()
     
-    for _ in range(2): 
+    for _ in range(3): 
         recipe = generate_random_recipe_with_ingredients()
         recipe_book.add_recipe(recipe)
 
