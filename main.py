@@ -4,7 +4,9 @@ import random
 
 Base = declarative_base()
 
-recipe_ingredient_association = Table('recipe_ingredient_association', Base.metadata,
+recipe_ingredient_association = Table(
+    'recipe_ingredient_association',
+    Base.metadata,
     Column('recipe_id', Integer, ForeignKey('recipe.id')),
     Column('ingredient_id', Integer, ForeignKey('ingredient.id')),
     Column('quantity', String)
@@ -15,8 +17,12 @@ class Recipe(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     instructions = Column(String)
-    ingredients = relationship("Ingredient", secondary=recipe_ingredient_association)
-
+    ingredients = relationship(
+        "Ingredient",
+        secondary=recipe_ingredient_association,
+        backref="recipes",
+        overlaps="recipes"
+    )
 
     def __repr__(self):
         return self.name
@@ -25,8 +31,6 @@ class Ingredient(Base):
     __tablename__ = 'ingredient'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    recipes = relationship("Recipe", secondary=recipe_ingredient_association)
-
 
 class RecipeBook:
     def __init__(self, session=None):
