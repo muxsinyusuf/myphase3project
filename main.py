@@ -9,7 +9,7 @@ recipe_ingredient_association = Table(
     Base.metadata,
     Column('recipe_id', Integer, ForeignKey('recipe.id')),
     Column('ingredient_id', Integer, ForeignKey('ingredient.id')),
-    Column('quantity', String)
+    Column('quantity', Integer)
 )
 
 class Recipe(Base):
@@ -141,10 +141,15 @@ recipe4.ingredients.append(Ingredient(name="Salt"))
 
 
 # Searching for a recipe
-query = "Spaghetti Carbonara"
+query = "chapo"
 search_result = recipe_book.search_recipe(query)
-print("Search result for '{}':".format(query))
-print(search_result)
+if search_result:
+
+    print("Search result for '{}':".format(query))
+    print('Yes there is ',search_result)
+else:
+    print("Search result for '{}':".format(query))
+    print('No there is no',query ,'for now')
 
 # Adding ingredients
 if search_result:
@@ -155,6 +160,6 @@ if search_result:
 
 # Removing ingredient 
 if search_result and len(search_result.ingredients) > 2:
-    ingredient = search_result.ingredients[2].name
+    ingredient = search_result.ingredients[0].name
     print("Removing '{}' from grocery list...".format(ingredient))
     recipe_book.remove_from_grocery_list(ingredient)
